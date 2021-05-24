@@ -1,0 +1,31 @@
+spring:    
+  cloud:
+    consul:
+      #host: consul.simon-cloud-local.com.cn
+      host: 192.168.1.43
+      port: 8500
+      enabled: true
+      discovery:
+        register-health-check: true
+        health-check-path: /check
+        health-check-interval: 5s
+        #配置注册中心显示当前服务的ip
+        prefer-ip-address: true
+        #配置当前服务的ip和端口号
+        instance-id: ${spring.application.name}:${spring.cloud.client.ip-address}:${server.port}
+        service-name: config-center-service
+      # Config-center item  
+      config:
+        enabled: true
+        prefix: config
+        #default-context: app
+        data-key: application 
+        watch:
+          enabled: true # 是否配置更新观察
+          delay: 3000
+          #wait-time: 1
+        format: YAML # 这个属性指定了 配置在consul的读取方式，
+                     # YAML 必须放入到“data” key下面，就是平常的yml文件内容
+                     # FILES
+                     # PROPERTIES 这个方式就是对应的key-value的方式
+                     # 详见：https://cloud.spring.io/spring-cloud-consul/

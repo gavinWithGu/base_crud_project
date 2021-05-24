@@ -1,0 +1,45 @@
+spring:
+  servlet:
+    multipart:
+      max-file-size: 60MB   #SpringBoot默认限制大小1MB，修改为50MB
+      enabled: true
+      max-request-size: 60MB
+  profiles:
+    active: dev
+  application:
+    name: api-project
+  main:
+    allow-bean-definition-overriding: true
+  autoconfigure:
+    exclude:
+      - org.springframework.cloud.netflix.eureka.EurekaClientAutoConfiguration
+server: 
+  servlet:
+    context-path: /ms
+
+mybatis:
+  type-aliases-package: com.gavin.foo.crud.bean.entity
+  
+#==========swagger2接口信息配置=======
+simon:
+    boot:
+      api-info:
+           title: Gavin Common REST API
+           description: PC & APP API Document
+           version: 1.0.0
+           termsOfServiceUrl:
+           contact:
+                name: Business Products Deparment
+                url: http://www.fool.com
+                email: guangyin_gu@sina.com
+           license:
+           licenseUrl:
+           pathsRegex: ^.*(?<!error)$
+      accessTokenExpiration: 180
+
+oss:
+  endpoint: oss-cn-shanghai.aliyuncs.com
+  accessKeyId: ******
+  accessKeySecret: ******
+  bucketName: ******
+  baseUrl: ******

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gavin.foo.crud.dao.UserDao">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.gavin.foo.crud.bean.entity.UserEntity">
+        <id column="_id" property="id" />
+        <result column="_name" property="name" />
+        <result column="_email" property="email" />
+        <result column="_ctime" property="ctime" />
+        <result column="_utime" property="utime" />
+        <result column="_is_deleted" property="isDeleted" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        _id, _name, _email, _ctime, _utime, _is_deleted
+    </sql>
+
+</mapper>

@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<included>
+    <turboFilter class="com.gavin.foo.crud.log.filter.LogCollectionFilter"/>
+    <property name="DESTINATION" value="${LOGSTASH_DESTINATION:-127.0.0.1}"/>
+    <property name="LOTSTASH_HOST" value="${LOTSTASH_HOST:-127.0.0.1}"/>
+    <property name="LOTSTASH_PORT" value="${LOTSTASH_PORT:-8019}"/>
+    <appender name="SOCKET_STASH_APPENDER" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+        <!-- logstash 服务地址 -->
+        <destination>${DESTINATION}</destination>
+<!--        <host>${LOTSTASH_HOST}</host>-->
+<!--        <port>${LOTSTASH_PORT}}</port>-->
+        <connectionStrategy>
+            <roundRobin>
+                <connectionTTL>5 minutes</connectionTTL>
+            </roundRobin>
+        </connectionStrategy>
+        <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+            <providers>
+                <context/>
+                <timestamp/>
+                <version/>
+                <!-- 线程名称 -->
+                <threadName/>
+                <!-- 日志级别 -->
+                <logLevel/>
+                <message/>
+                <mdc>
+                    <!-- 基本元素配置 -->
+                    <!-- 节点名称/ip -->
+                    <includeMdcKeyName>node</includeMdcKeyName>
+                    <!-- 主机名称 -->
+                    <includeMdcKeyName>hostname</includeMdcKeyName>
+                    <!-- 服务来源 -->
+                    <includeMdcKeyName>source</includeMdcKeyName>
+                    <!-- 应用名称 -->
+                    <includeMdcKeyName>application</includeMdcKeyName>
+                    <!-- 模块名 -->
+                    <includeMdcKeyName>module</includeMdcKeyName>
+                    <!-- 文件名，类名 -->
+                    <includeMdcKeyName>module_name</includeMdcKeyName>
+                    <includeMdcKeyName>api_version</includeMdcKeyName>
+                    <includeMdcKeyName>trace_id</includeMdcKeyName>
+                    <includeMdcKeyName>span_id</includeMdcKeyName>
+                    <!-- 客户请求id -->
+                    <includeMdcKeyName>request_id</includeMdcKeyName>
+                    <!-- 服务版本 -->
+                    <includeMdcKeyName>version</includeMdcKeyName>
+
+                    <!-- 常用业务相关配置 -->
+                    <includeMdcKeyName>ip</includeMdcKeyName>
+                    <includeMdcKeyName>mac</includeMdcKeyName>
+                    <includeMdcKeyName>imei</includeMdcKeyName>
+                    <includeMdcKeyName>did</includeMdcKeyName>
+                    <includeMdcKeyName>product_key</includeMdcKeyName>
+                    <includeMdcKeyName>device_sn</includeMdcKeyName>
+                    <includeMdcKeyName>enterprise_id</includeMdcKeyName>
+                    <includeMdcKeyName>user_name</includeMdcKeyName>
+                    <includeMdcKeyName>user_id</includeMdcKeyName>
+                    <includeMdcKeyName>token</includeMdcKeyName>
+                    <includeMdcKeyName>gizwits_uid</includeMdcKeyName>
+                    <includeMdcKeyName>open_id</includeMdcKeyName>
+                    <includeMdcKeyName>3rd_order_no</includeMdcKeyName>
+                    <includeMdcKeyName>order_no</includeMdcKeyName>
+                    <includeMdcKeyName>msg_id</includeMdcKeyName>
+                    <includeMdcKeyName>msg_code</includeMdcKeyName>
+                    <includeMdcKeyName>msg_type</includeMdcKeyName>
+                    <includeMdcKeyName>msg</includeMdcKeyName>
+                    <includeMdcKeyName>http_status</includeMdcKeyName>
+                    <includeMdcKeyName>http_url</includeMdcKeyName>
+                    <includeMdcKeyName>http_method</includeMdcKeyName>
+                    <!-- 接受请求的时间 -->
+                    <includeMdcKeyName>received_ts</includeMdcKeyName>
+                    <!-- 错误码 -->
+                    <includeMdcKeyName>error_code</includeMdcKeyName>
+                    <!-- 前端操作系统 -->
+                    <includeMdcKeyName>os</includeMdcKeyName>
+                    <!-- 业务名称 -->
+                    <includeMdcKeyName>busi_name</includeMdcKeyName>
+                    <!-- 拓展字段（最长255字节）-->
+                    <includeMdcKeyName>extend</includeMdcKeyName>
+                    <!-- 耗时（毫秒）-->
+                    <includeMdcKeyName>cost_time</includeMdcKeyName>
+                    <!-- 过期时间 datetime -->
+                    <includeMdcKeyName>expire_at</includeMdcKeyName>
+                    <!-- 国家 -->
+                    <includeMdcKeyName>country</includeMdcKeyName>
+                    <!-- 城市 -->
+                    <includeMdcKeyName>city</includeMdcKeyName>
+                    <!-- 区域 -->
+                    <includeMdcKeyName>region</includeMdcKeyName>
+
+                    <!-- aep module parameter -->
+                    <!-- snoti事件类型 -->
+                    <includeMdcKeyName>event_type</includeMdcKeyName>
+                    <includeMdcKeyName>api_version</includeMdcKeyName>
+
+                    <!--  说明查看 BusinessLogFieldEnum 类  -->
+                    <includeMdcKeyName>biz_code</includeMdcKeyName>
+                    <includeMdcKeyName>biz_result</includeMdcKeyName>
+                    <includeMdcKeyName>err_code</includeMdcKeyName>
+                    <includeMdcKeyName>login_type</includeMdcKeyName>
+
+                </mdc>
+                <contextMap/>
+                <arguments>
+                    <includeStructuredArguments>true</includeStructuredArguments>
+                </arguments>
+                <!-- 开启marker标记 作为自定义字段输出到logstash-->
+                <logstashMarkers/>
+                <pattern>
+                    <!-- 日志输出格式 -->
+                    <pattern>
+                        {
+                        "cost_time": "#asLong{%X{cost_time}}",
+                        "relative": "#asLong{%relative}",
+                        "pid": "${PID:--}",
+                        "trace_id": "%X{X-B3-TraceId:--}",
+                        "parent_span_id": "%X{X-B3-ParentSpanId:--}",
+                        "span_id": "%X{X-B3-SpanId:--}"
+                        }
+                    </pattern>
+                </pattern>
+
+                <callerData>
+                    <!-- 文件名 -->
+                    <fileFieldName>file_name</fileFieldName>
+                    <!-- 类名 -->
+                    <classFieldName>module_name</classFieldName>
+                    <!-- 方法名 -->
+                    <methodFieldName>function</methodFieldName>
+                    <!-- 日志打印的行数 -->
+                    <lineFieldName>line</lineFieldName>
+                </callerData>
+                <stackTrace>
+                    <throwableConverter class="net.logstash.logback.stacktrace.ShortenedThrowableConverter">
+                        <maxDepthPerThrowable>30</maxDepthPerThrowable>
+                        <maxLength>2048</maxLength>
+                        <shortenedClassNameLength>20</shortenedClassNameLength>
+                        <exclude>^sun\.reflect\..*\.invoke</exclude>
+                        <exclude>^net\.sf\.cglib\.proxy\.MethodProxy\.invoke</exclude>
+                        <rootCauseFirst>true</rootCauseFirst>
+                    </throwableConverter>
+                </stackTrace>
+            </providers>
+        </encoder>
+    </appender>
+</included>
