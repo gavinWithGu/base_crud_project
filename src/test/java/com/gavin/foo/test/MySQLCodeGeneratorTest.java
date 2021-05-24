@@ -13,8 +13,8 @@ import org.junit.Test;
  **/
 public class MySQLCodeGeneratorTest {
     private static final String DB_URL = "jdbc:mysql://192.168.1.227:3306/mp?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8";
-    private static final String USER_NAME = "simonsaas";
-    private static final String PASSWORD = "simonss2019";
+    private static final String USER_NAME = "******";
+    private static final String PASSWORD = "******";
     private static final String DB_DRIVER = "com.mysql.cj.jdbc.Driver";
 
     private static final String PACKAGE_NAME = "com.simon.cloud.iot.ota";  // 基础包名
