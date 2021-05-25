@@ -1,8 +1,8 @@
-ARG REPOSITORY=registry.cn-shanghai.aliyuncs.com/simon_saas
+ARG REPOSITORY=registry.cn-shanghai.aliyuncs.com/******
 ARG IMAGE_NAME=openjdk
 ARG IMAGE_TAG=8u171-jdk-alpine3.8
 FROM ${REPOSITORY}/${IMAGE_NAME}:$IMAGE_TAG
-LABEL maintainer="<guangyin.gu@simon.com.cn>" \
+LABEL maintainer="<guangyin_gu@sina.com>" \
       author="Gavin" \
       simon.cloud.3rd="base_crud"
 
